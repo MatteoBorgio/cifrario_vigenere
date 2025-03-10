@@ -9,19 +9,20 @@ def genera_tabula_recta() -> list[list[str]]:
         matrice.append(riga)
     return matrice
 
+
 def cifra(messaggio: str, chiave: str, tabula_recta: list[list[str]]) -> str:
     """Cifra un messaggio con il cifrario di Vigenère usando la tabula recta.
-    
+
     Args:
         messaggio: Il testo da cifrare (solo lettere A-Z, senza spazi o caratteri speciali).
         chiave: La parola chiave usata per la cifratura.
         tabula_recta: La tabula recta pre-generata.
-    
+
     Returns:
         Il testo cifrato.
     """
     chiave_cifratura = estendi_chiave(chiave, len(messaggio))
-    
+
     messaggio_cifrato = ""
     for i in range(len(messaggio)):
         indice_messaggio = tabula_recta[0].index(messaggio[i].upper())
@@ -30,19 +31,20 @@ def cifra(messaggio: str, chiave: str, tabula_recta: list[list[str]]) -> str:
 
     return messaggio_cifrato.upper()
 
+
 def decifra(messaggio_cifrato: str, chiave: str, tabula_recta: list[list[str]]) -> str:
     """Decifra un messaggio cifrato con il cifrario di Vigenère usando la tabula recta.
-    
+
     Args:
         messaggio_cifrato: Il testo cifrato.
         chiave: La parola chiave usata per la cifratura.
         tabula_recta: La tabula recta pre-generata.
-    
+
     Returns:
         Il testo decifrato.
     """
     chiave_cifratura = estendi_chiave(chiave, len(messaggio_cifrato))
-    
+
     messaggio_decifrato = ""
     for i in range(len(messaggio_cifrato)):
         indice_chiave = tabula_recta[0].index(chiave_cifratura[i].upper())
@@ -51,30 +53,32 @@ def decifra(messaggio_cifrato: str, chiave: str, tabula_recta: list[list[str]]) 
 
     return messaggio_decifrato
 
+
 def normalizza_testo(testo: str) -> str:
     """Rimuove caratteri non alfabetici e converte tutto in maiuscolo per garantire compatibilità con la cifratura.
-    
+
     Args:
         testo: Il testo di input.
-    
+
     Returns:
         Il testo pulito e in maiuscolo.
     """
     alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     testo_normalizzato = ""
-    for carattere in testo:
+    for carattere in testo.upper():
         if carattere in alfabeto:
             testo_normalizzato += carattere
-    
-    return testo_normalizzato.upper()
+
+    return testo_normalizzato
+
 
 def estendi_chiave(chiave: str, lunghezza: int) -> str:
     """Espande la chiave fino alla lunghezza richiesta ripetendola ciclicamente.
-    
+
     Args:
         chiave: La parola chiave originale.
         lunghezza: La lunghezza del testo da cifrare/decifrare.
-    
+
     Returns:
         La chiave estesa.
     """
@@ -85,13 +89,14 @@ def estendi_chiave(chiave: str, lunghezza: int) -> str:
             i = 0
         chiave_cifratura += chiave[i]
         i += 1
-    
-    return chiave_cifratura.upper()
+
+    return chiave_cifratura
+
 
 def main():
     """Funzione principale che gestisce l'interazione con l'utente."""
     print("Cifrario di Vigenère")
-    
+
     tabula_recta = genera_tabula_recta()
 
     scelta = input("Vuoi cifrare (C) o decifrare (D)? ").strip().upper()
